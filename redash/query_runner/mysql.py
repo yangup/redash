@@ -66,6 +66,7 @@ class Mysql(BaseSQLQueryRunner):
                 "passwd": {"type": "string", "title": "Password"},
                 "db": {"type": "string", "title": "Database name"},
                 "port": {"type": "number", "default": 3306},
+                "timezone": {"type": "string", "default": 'UTC'},
             },
             "order": ["host", "port", "user", "passwd", "db"],
             "required": ["db"],
@@ -122,9 +123,10 @@ class Mysql(BaseSQLQueryRunner):
 
         connection = MySQLdb.connect(**params)
 
-        # cursor = connection.cursor()
-        # # cursor.execute(host.split("#")[1])
-        # cursor.execute("SET time_zone='%s'" % host.split("#")[1])
+        cursor = connection.cursor()
+        timezone = self.configuration["timezone"]
+        if timezone:
+            cursor.execute(f"SET time_zone='{timezone}'")
 
         return connection
 
