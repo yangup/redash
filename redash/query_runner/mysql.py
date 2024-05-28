@@ -115,7 +115,6 @@ class Mysql(BaseSQLQueryRunner):
             use_unicode=True,
             connect_timeout=60,
         )
-
         ssl_options = self._get_ssl_parameters()
 
         if ssl_options:
