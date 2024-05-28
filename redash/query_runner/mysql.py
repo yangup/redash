@@ -102,6 +102,9 @@ class Mysql(BaseSQLQueryRunner):
         return enabled
 
     def _connection(self):
+
+        # host = self.configuration.get("host", "")
+
         params = dict(
             host=self.configuration.get("host", ""),
             user=self.configuration.get("user", ""),
@@ -119,6 +122,10 @@ class Mysql(BaseSQLQueryRunner):
             params["ssl"] = ssl_options
 
         connection = MySQLdb.connect(**params)
+
+        # cursor = connection.cursor()
+        # # cursor.execute(host.split("#")[1])
+        # cursor.execute("SET time_zone='%s'" % host.split("#")[1])
 
         return connection
 
@@ -150,7 +157,6 @@ class Mysql(BaseSQLQueryRunner):
             schema[table_name]["columns"].append(row["column_name"])
 
         return list(schema.values())
-
 
     def run_query(self, query, user):
         ev = threading.Event()
