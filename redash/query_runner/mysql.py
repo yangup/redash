@@ -123,16 +123,13 @@ class Mysql(BaseSQLQueryRunner):
         return connection
 
     def _get_tables(self, schema):
-        db = self.configuration["db"]
         query = """
         SELECT col.table_schema as table_schema,
                col.table_name as table_name,
                col.column_name as column_name
         FROM `information_schema`.`columns` col
-        WHERE col.table_schema NOT IN ('information_schema', 'performance_schema', 'mysql', 'sys')
-        and col.table_schema IN ('%s')
-        ;
-        """ % (db)
+        WHERE col.table_schema NOT IN ('information_schema', 'performance_schema', 'mysql', 'sys');
+        """
 
         results, error = self.run_query(query, None)
 
