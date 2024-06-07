@@ -138,7 +138,6 @@ class Mysql(BaseSQLQueryRunner):
                col.column_name as column_name
         FROM `information_schema`.`columns` col
         WHERE col.table_schema NOT IN ('information_schema', 'performance_schema', 'mysql', 'sys')
-        and col.table_schema IN ('%s')
         ;
         """ % (db)
 
