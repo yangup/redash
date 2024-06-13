@@ -123,10 +123,10 @@ class Mysql(BaseSQLQueryRunner):
 
         connection = MySQLdb.connect(**params)
 
-        cursor = connection.cursor()
-        timezone = self.configuration["timezone"]
-        if timezone:
-            cursor.execute(f"SET time_zone='{timezone}'")
+        # cursor = connection.cursor()
+        # timezone = self.configuration["timezone"]
+        # if timezone:
+        #     cursor.execute(f"SET time_zone='{timezone}'")
 
         return connection
 
@@ -186,6 +186,9 @@ class Mysql(BaseSQLQueryRunner):
     def _run_query(self, query, user, connection, r, ev):
         try:
             cursor = connection.cursor()
+            timezone = self.configuration["timezone"]
+            if timezone:
+                cursor.execute(f"SET time_zone='{timezone}';")
             logger.debug("MySQL running query: %s", query)
             cursor.execute(query)
 
